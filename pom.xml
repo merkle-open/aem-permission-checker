@@ -19,7 +19,7 @@
     <groupId>com.namics.oss.aem</groupId>
     <artifactId>permissionchecker</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <description>permissionchecker</description>
 
     <modules>
