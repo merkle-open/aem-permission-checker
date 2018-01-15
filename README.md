@@ -93,6 +93,8 @@ The permission checker provides a simple GUI which allows you to execute tests a
 ![tools-menu-entry](docs/images/tools-menu-entry.png)
 
 Direct link:[/apps/namics/permissionchecker/gui.html](http://localhost:4502/apps/namics/permissionchecker/gui.html)
+
+
 ![permission-checker-gui](docs/images/gui.png)
 
 ## How to contribute
