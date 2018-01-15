@@ -7,7 +7,7 @@ This is a project provides a tool to test user permissions for [Adobe Experience
 * AEM 6.3 or later
 
 ### Download
-> comming soon
+Download the latest release here: https://github.com/namics/aem-permission-checker/releases
 
 ### Installation and Configuration
 Upload and install the content package using the [CRX Package Manager](http://localhost:4502/crx/packmgr/index.jsp).
