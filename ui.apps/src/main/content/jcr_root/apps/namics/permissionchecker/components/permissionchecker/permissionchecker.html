@@ -1,0 +1,471 @@
+<html class="coral-App">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Permission Checker</title>
+
+	<sly data-sly-use.clientLib="${'/libs/granite/sightly/templates/clientlib.html'}"
+		 data-sly-call="${clientLib.js @ categories='cq.jquery'}"></sly>
+	<style>
+		body {
+			font-family: Arial, serif;
+		}
+
+		.alert {
+			padding: 15px;
+			border: 1px solid transparent;
+
+		}
+
+		.alert h4 {
+			margin-top: 0;
+			color: inherit;
+		}
+
+		.alert > p,
+		.alert > ul {
+			margin-bottom: 0;
+		}
+
+		.alert > p + p {
+			margin-top: 5px;
+		}
+
+		.alert-success {
+			color: #3c763d;
+			background-color: #dff0d8;
+			border-color: #d6e9c6;
+		}
+
+		.alert-success hr {
+			border-top-color: #c9e2b3;
+		}
+
+		.alert-danger {
+			color: #a94442;
+			background-color: #f2dede;
+			border-color: #ebccd1;
+		}
+
+		.alert-danger hr {
+			border-top-color: #e4b9c0;
+		}
+
+		.btn {
+			display: inline-block;
+			padding: 6px 12px;
+			margin-bottom: 0;
+			font-size: 14px;
+			font-weight: normal;
+			line-height: 1.42857143;
+			text-align: center;
+			white-space: nowrap;
+			vertical-align: middle;
+			-ms-touch-action: manipulation;
+			touch-action: manipulation;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			background-image: none;
+			border: 1px solid transparent;
+
+		}
+
+		.btn:focus,
+		.btn:active:focus {
+			outline: 5px auto -webkit-focus-ring-color;
+			outline-offset: -2px;
+		}
+
+		.btn:hover,
+		.btn:focus {
+			color: #333;
+			text-decoration: none;
+		}
+
+		.btn:active {
+			background-image: none;
+			outline: 0;
+			-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+			box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+		}
+
+		.btn-primary {
+			color: #fff;
+			background-color: #3C96C8;
+			border-color: #2e6da4;
+		}
+
+		.btn-primary:focus {
+			color: #fff;
+			background-color: #286090;
+			border-color: #122b40;
+		}
+
+		.btn-primary:hover,
+		.btn-primary:active {
+			color: #fff;
+			background-color: #286090;
+			border-color: #204d74;
+		}
+
+		.btn-primary:active:hover {
+			color: #fff;
+			background-color: #204d74;
+			border-color: #122b40;
+		}
+
+		.btn-primary:active {
+			background-image: none;
+		}
+
+		.form-group {
+			margin-top: 15px;
+			margin-bottom: 15px;
+			border: 1px solid #ccc;
+			padding: 15px;
+			overflow: auto;
+			background-color: #fff;
+		}
+
+		.form-control {
+			display: block;
+			width: 100%;
+			height: 34px;
+			padding: 6px 12px;
+			font-size: 14px;
+			line-height: 1.42857143;
+			color: #555;
+			background: #fff none;
+			border: 1px solid #ccc;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+			-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+			-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+
+		}
+
+		.form-control:focus {
+			border-color: #3C50A0;
+			outline: 0;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+		}
+
+		.form-control::-moz-placeholder {
+			color: #999;
+			opacity: 1;
+		}
+
+		.form-control:-ms-input-placeholder {
+			color: #999;
+		}
+
+		.form-control::-webkit-input-placeholder {
+			color: #999;
+		}
+
+		.form-control::-ms-expand {
+			background-color: transparent;
+			border: 0;
+		}
+
+		textarea.form-control {
+			height: auto;
+			resize: none;
+		}
+
+		.panel {
+			margin-bottom: 10px;
+			background-color: #fff;
+			border: 1px solid #ddd;
+			-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+			box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+		}
+
+		.panel-body {
+			padding: 15px;
+			border-top: 1px solid #ddd;
+		}
+
+		.panel-heading {
+			padding: 10px 15px;
+			cursor: pointer;
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+			color: #333;
+			background-color: #f5f5f5;
+		}
+
+		h1, h2, h3, h4, h5, h6 {
+			font-family: Arial, serif;
+			font-weight: bold;
+		}
+
+		dl {
+			letter-spacing: -0.31em;
+			*letter-spacing: normal;
+			word-spacing: -0.43em;
+		}
+
+		dt,
+		dd {
+			display: inline-block;
+			*display: inline;
+			zoom: 1;
+			letter-spacing: normal;
+			word-spacing: normal;
+			vertical-align: top;
+			width: 46%;
+			padding: 3px 2% 4px;
+			margin: 0;
+		}
+
+		dt {
+			margin-right: -1px;
+			font-weight: bold;
+		}
+
+		dl {
+			border-bottom: 1px solid #ccc;
+		}
+
+		dt,
+		dd {
+			border-top: 1px solid #ccc;
+		}
+
+		.twoColList {
+			columns: 2;
+			-webkit-columns: 2;
+			-moz-columns: 2;
+		}
+
+		ul {
+			list-style-type: none;
+			padding: 0;
+		}
+
+		li {
+			border-left: 2px solid #ccc;
+			margin-bottom: 10px;
+			padding-left: 5px;
+		}
+
+		pre {
+			white-space: pre-wrap;
+			white-space: -moz-pre-wrap;
+			white-space: -o-pre-wrap;
+			word-wrap: break-word;
+		}
+	</style>
+</head>
+
+<body style="background-color: #3F3F3F">
+<div style="padding: 15px; background-color: #3C50A0">
+	<h1><span style="color: #fff">Permissions. </span><span style="color: #3C96C8">Namics.</span></h1>
+	<button id="submit" class="btn btn-primary">Send!</button>
+	<button id="collapse" class="btn btn-primary">Instructions</button>
+</div>
+<div class="form-group" style="background-color: #3C96C8; border:none; margin-top: 0; ">
+	<div id="content-left" style="float: left; margin-right: 15px; width: 100%">
+		<textarea id="jsonData" class="form-control" style="height:512px;"
+				  placeholder="Put your JSON testcases here..."></textarea>
+		<div style="margin-top: 15px">
+			<img id="loading-image" style="margin:auto; display: none"
+				 src="/apps/namics-aem-tools/components/utilities/permissionchecker/Blocks.gif">
+			<div id="status" class="form-group" style="display: none">
+				<h2>Results</h2>
+				<div id="okIndicator" class="alert"></div>
+				<div id="statusbar"
+					 style="display:none; border: 1px solid #ccc; height: 30px; background-color: red;margin-top: 15px">
+					<div id="successbar" style="width: 50%;height: 100%; background-color: green"></div>
+				</div>
+				<h2 id="testsFailedTitle">Failed Tests (parsed)</h2>
+				<div id="parsedResults" style="margin-top: 15px">
+				</div>
+				<h2>Test results (raw)</h2>
+				<div class="panel" style="margin-top: 15px">
+					<div class="panel-heading accordion"><span style="font-weight: bold">&#9658;</span> Details</div>
+					<div class="panel-body accordion_panel" style="display: none;">
+						<pre><code id="resultDetails"></code></pre>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="instructions" class="form-group" style="display: none; overflow: hidden; margin-top: 0;">
+		<h2>How to use this tool</h2>
+		<div class="panel">
+			<div class="panel-heading accordion"><span style="font-weight: bold">&#9658;</span> Code Example</div>
+			<div class="panel-body accordion_panel" style="display: none">
+			<pre><code>[
+  {
+    "name": "*testname*",
+    "paths": [
+      "*pathToNode*",
+      "*pathToNode*"
+    ],
+    "users": [
+	  "*userId*",
+	  "*userId*"
+    ],
+    "allow": [
+	  "*permission*",
+	  "*permission*"
+    ],
+    "deny": [
+	  "*permission*",
+	  "*permission*"
+    ]
+  },
+  ...
+]
+			</code></pre>
+			</div>
+		</div>
+		<div class="panel">
+			<div class="panel-heading accordion"><span style="font-weight: bold">&#9658;</span> Attributes</div>
+			<div class="panel-body accordion_panel" style="display: none;">
+				<dl>
+					<dt>*testname*</dt>
+					<dd>An arbitrary string. Used to identify the test case</dd>
+					<dt>*userId*</dt>
+					<dd>A valid user id. Groups cannot be used.</dd>
+					<dt>*permission*</dt>
+					<dd>Permissions to be checked. A user must have all permissions in the "allow" block and must not
+						have
+						any
+						permissions in the "deny" block for the test to be successful
+					</dd>
+					<dt>Allowed permissions</dt>
+					<dd>
+						<ul class="twoColList">
+							<li>read</li>
+							<li>write</li>
+							<li>modifyProperties</li>
+							<li>addChildNodes</li>
+							<li>removeNode</li>
+							<li>removeChildNodes</li>
+							<li>readAccessControl</li>
+							<li>modifyAccessControl</li>
+							<li>lockManagement</li>
+							<li>versionManagement</li>
+							<li>nodeTypeManagement</li>
+							<li>retentionManagement</li>
+							<li>lifecycleManagement</li>
+							<li>all</li>
+							<li>replicate</li>
+						</ul>
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="application/javascript">
+	$("#collapse").click(function () {
+		if ($("#content-left").width() === $("#content-left").parent().width()) {
+			$("#content-left").width("50%");
+			$("#instructions").animate({
+				height: 'toggle'
+			});
+		} else {
+			$("#instructions").animate({
+				height: 'toggle'
+			}, function () {
+				$("#content-left").width("100%")
+			});
+		}
+
+	});
+	$(".accordion").click(function () {
+		$(this).siblings(".accordion_panel").animate({
+			height: 'toggle'
+		});
+		var text = $(this).find("span").text();
+		$(this).find("span").text(text == "\u25ba" ? "\u25bc" : "\u25ba");
+	});
+	$("#submit").click(function () {
+		var okIndicator = $("#okIndicator");
+		var payload = $("#jsonData").val();
+		var resultDetails = $("#resultDetails");
+		var resultPanel = $("#parsedResults");
+		var testsFailedTitle = $("#testsFailedTitle");
+
+		if ($("#status").is(":visible")) {
+			$("#status").animate({
+				height: 'toggle'
+			});
+		}
+		$("#statusbar").hide();
+		testsFailedTitle.hide();
+		$.ajax({
+			type: "POST",
+			url: "/bin/permissionchecker",
+			contentType: "application/json; charset=utf-8",
+			data: payload,
+			beforeSend: function () {
+				$("#loading-image").css("display", "block");
+			},
+			complete: function () {
+				$("#loading-image").hide();
+			},
+			success: function (data) {
+				resultPanel.empty();
+				resultDetails.html(JSON.stringify(data, null, '    '));
+				okIndicator.html("All tests Successful!");
+				okIndicator.removeClass("alert-danger alert-success").addClass("alert-success");
+				$("#status").animate({
+					height: 'toggle'
+				});
+			},
+			error: function (data) {
+				resultPanel.empty();
+				var value = data.responseJSON;
+				if (value) {
+					$(value.testResults).each(
+							function () {
+								if (!this.success) {
+									testsFailedTitle.show();
+									resultPanel.append("<div class='panel'><div class='panel-heading accordion'>" +
+											"<span style='font-weight: bold\'>&#9658;</span> " + this.name +
+											"</div> <div class='panel-body accordion_panel' style='display: none;'><ul><li>"
+											+ this.errors.join("</li><li>") + "</li></ul></div></div>")
+								}
+							}
+					);
+					resultPanel.find(".accordion").click(function () {
+						$(this).siblings(".accordion_panel").animate({
+							height: 'toggle'
+						});
+					});
+					okIndicator.html(value.testsFailed + " / " + value.testsExecuted + " tests failed!");
+					resultDetails.html(JSON.stringify(value, null, '    '));
+					var width = 100 - (value.testsFailed / value.testsExecuted * 100);
+					$("#successbar").width(width + "%");
+					$("#statusbar").show();
+				} else {
+					okIndicator.html("Tests failed!");
+					resultDetails.html(JSON.stringify(data, null, '    '));
+				}
+				okIndicator.removeClass("alert-danger alert-success").addClass("alert-danger");
+				$("#status").animate({
+					height: 'toggle'
+				});
+
+			},
+			dataType: "json"
+		});
+
+	});
+</script>
+
+</body>
+</html>

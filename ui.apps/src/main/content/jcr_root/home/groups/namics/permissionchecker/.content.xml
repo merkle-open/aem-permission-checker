@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
+    jcr:mixinTypes="[rep:AccessControllable]"
+    jcr:primaryType="rep:Group"
+    jcr:uuid="93fe2f0c-87d4-319f-8e8a-fb9729462f46"
+    rep:authorizableId="namics-permission-checker"
+    rep:principalName="namics-permission-checker">
+    <profile
+        jcr:primaryType="nt:unstructured"
+        aboutMe="Users in this group are authorized to use the namics permission checker"
+        givenName="Permission Checker Users"/>
+</jcr:root>
