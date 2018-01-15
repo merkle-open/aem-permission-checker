@@ -93,7 +93,7 @@ The permission checker provides a simple GUI which allows you to execute tests a
 ![tools-menu-entry](docs/images/tools-menu-entry.png)
 
 Direct link:[/apps/namics/permissionchecker/gui.html](http://localhost:4502/apps/namics/permissionchecker/gui.html)
-
+![permission-checker-gui](docs/images/gui.png)
 
 ## How to contribute
 
@@ -132,4 +132,4 @@ Or to deploy only the bundle to the author, run
 ### Maven settings
 The project comes with the auto-public repository configured. To setup the repository in your Maven settings, refer to:
 
-    http://helpx.adobe.com/experience-manager/kb/SetUpTheAdobeMavenRepository.html
+[http://helpx.adobe.com/experience-manager/kb/SetUpTheAdobeMavenRepository.html](http://helpx.adobe.com/experience-manager/kb/SetUpTheAdobeMavenRepository.html)
