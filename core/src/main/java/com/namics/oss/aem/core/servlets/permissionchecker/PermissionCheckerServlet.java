@@ -77,7 +77,7 @@ public class PermissionCheckerServlet extends SlingAllMethodsServlet {
     protected void doPost(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
         if (active && isAuthorized(request)) {
 
-            response.setContentType("application/json"); //TODO: use constant
+            response.setContentType("application/json");
 
             try {
                 final PermissionTestCase[] permissionTestCases = JSON_MAPPER.readValue(request.getInputStream(), PermissionTestCase[].class);
