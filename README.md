@@ -1,10 +1,10 @@
 # AEM Permission Checker
-This is a project provides a tool to test user permissions for [Adobe Experience Manager 6.3](https://helpx.adobe.com/experience-manager/6-3/release-notes.html).
+This is a project provides a tool to test user permissions for [Adobe Experience Manager 6.4](https://helpx.adobe.com/experience-manager/6-4/release-notes.html).
 
 ## How to use
 
 ### Requirements
-* AEM 6.3 or later
+* AEM 6.4 or later
 
 ### Download
 Download the latest release here: https://github.com/namics/aem-permission-checker/releases
